@@ -48,7 +48,6 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 | Convolution 5x5	    | 5x5 stride, same padding			|
 | RELU					|												|
 | Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
-
 |	Flatten					|					output:400							|
 | Fully connected		| outputs:100       									|
 |	RELU					|												|
