@@ -18,23 +18,19 @@ Rubric Points
 
 The overall strategy for deriving a model architecture was to use LetNet architecture to train the driving data. Then valid my data using valid data set. 
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a Cropping method to just keep the road part. Then I resized my image to 16-32-3, used Lambda function to normalize the image. 
+After that I applied Convolution Neural network to process the image.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting.
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I also used generator function to save the storage. 
 
-To combat the overfitting, I modified the model so that ...
-
-Then I ...
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. At the beginning, the car would drive out of the track, so I increased the epoch number to get a better performance.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture consisted of a convolution neural network with the following layers and layer sizes.
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
 | Layer (type)   |                  Output Shape     |     Param #   |  Connected to |
 |:-----------------------------:|:------------------------------:|:-----------------:|:---------------------------------------:| 
@@ -56,24 +52,16 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I used the given data.zip file as my input data (I couldn't control the car going straight using simulator). Here is an example image of center lane driving:
 
 alt text
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
-alt text alt text alt text
 
-Then I repeated this process on track two in order to get more data points.
+After the collection process, I had 7634 number of data points. I then preprocessed this data using pre-defined generator function.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+I finally randomly shuffled the data set and put 402 data into a validation set.
 
-alt text alt text
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. I used 15 epoch to train my data. And I got the data loss as 0.0059, validation loss as 0.0079.
 
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set.
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used an adam optimizer so that manually training the learning rate wasn't necessary.
