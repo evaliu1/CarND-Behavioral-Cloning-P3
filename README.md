@@ -54,7 +54,7 @@ The final model architecture consisted of a convolution neural network with the 
 
 To capture good driving behavior, I used the given data.zip file as my input data (I couldn't control the car going straight using simulator). Here is an example image of center lane driving:
 
-![alt text](CarND-Behavioral-Cloning-P3/center_2016_12_01_13_30_48_404.jpg)
+![alt text](https://github.com/evaliu1/CarND-Behavioral-Cloning-P3/center_2016_12_01_13_30_48_404.jpg)
 
 
 
