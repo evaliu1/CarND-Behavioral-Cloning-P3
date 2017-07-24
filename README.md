@@ -36,26 +36,23 @@ The final model architecture (model.py lines 18-24) consisted of a convolution n
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 160x320x3 RGB image   							| 
-| Convolution 8x8     	| 8x8 stride, same padding	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
-| Convolution 5x5	    | 5x5 stride, same padding			|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
-| Convolution 5x5	    | 5x5 stride, same padding			|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
-|	Flatten					|					output:400							|
-| Fully connected		| outputs:100       									|
-|	RELU					|												|
-|	Dropout					|												|
-| Fully connected		| outputs:50       									|
-|	RELU					|												|
-|	Dropout					|												|
-| Fully connected		| outputs:1      									|
+| Layer (type)   |                  Output Shape     |     Param #   |  Connected to |
+|:---------------------:|:-------------------------------------:|:-----------------:|:---------------------------------------------:| 
+cropping2d_1 (Cropping2D)   |     (None, 65, 320, 3)  |  0    |       cropping2d_input_1[0][0]  |        
+lambda_1 (Lambda)     |           (None, 16, 32, 3)   |  0    |      cropping2d_1[0][0]      |         
+lambda_2 (Lambda)     |          (None, 16, 32, 3)    | 0    |       lambda_1[0][0]           |       
+convolution2d_1 (Convolution2D)|  (None, 14, 30, 16) |   448  |       lambda_2[0][0]           |       
+convolution2d_2 (Convolution2D)|  (None, 12, 28, 32) |   4640   |     convolution2d_1[0][0]    |        
+convolution2d_3 (Convolution2D)|  (None, 10, 26, 64) |   18496  |    convolution2d_2[0][0]     |       
+maxpooling2d_1 (MaxPooling2D) |   (None, 5, 13, 64)  |   0      |   convolution2d_3[0][0]      |     
+dropout_1 (Dropout)         |     (None, 5, 13, 64)  |   0      |    maxpooling2d_1[0][0]      |       
+flatten_1 (Flatten)         |    (None, 4160)        |  0       |    dropout_1[0][0]           |       
+activation_1 (Activation)   |   (None, 4160)        |  0        |   flatten_1[0][0]            |      
+dense_1 (Dense)             |     (None, 100)       |    416100  |    activation_1[0][0]       |        
+activation_2 (Activation)   |     (None, 100)       |   0        |  dense_1[0][0]              |      
+dense_2 (Dense)             |     (None, 50)        |    5050    |  activation_2[0][0]         |      
+activation_3 (Activation)   |     (None, 50)        |   0        |  dense_2[0][0]              |      
+dense_3 (Dense)             |     (None, 1)         |    51      |  activation_3[0][0]   |
 
 #### 3. Creation of the Training Set & Training Process
 
