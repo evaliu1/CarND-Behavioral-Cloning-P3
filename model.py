@@ -80,28 +80,38 @@ import tensorflow as tf
 
 def resize_comma(image):
     import tensorflow as tf 
-    return tf.image.resize_images(image, [16,32])
+    return tf.image.resize_images(image, [66,200])
 
 model= Sequential()
-#odel.add(Lambda(lambda x: x/127.5 - 1.,input_shape=(160,320,3)))
-#odel.add(Lambda(lambda x: (x/255.0-0.5)),input_shape=(160, 320, 1))
-#odel.add(Cropping2D(cropping=((70, 25), (0, 0))))
-
-model.add(Cropping2D(cropping=((70, 25), (0, 0)),
+model.add(Cropping2D(cropping=((60, 20), (0, 0)),
                      dim_ordering='tf', # default
                      input_shape=(160, 320, 3)))
+#model.add(Lambda(lambda x: (x/255.0) - 0.5),input_shape=(160,320,3))
+
 # Resize the data
-model.add(Lambda(resize_comma))
+#model.add(Lambda(resize_comma,input_shape=(160,320,3)))
 # Normalize the data set
+model.add(Lambda(resize_comma))
 model.add(Lambda(lambda x: (x/255.0) - 0.5))
 
 #onv2D(16,5,5, input_shape=(32, 16, 1), border_mode='same', activation='relu')
-model.add(Convolution2D(16,3,3,activation="relu"))
-model.add(Convolution2D(32,3,3,activation = "relu"))
-model.add(Convolution2D(64,3,3,activation = "relu"))
-model.add(MaxPooling2D())
+#model.add(Convolution2D(16,5,5,activation="relu"))
+#model.add(Convolution2D(32,5,5,activation = "relu"))
+#model.add(Convolution2D(64,5,5,activation = "relu"))
+#model.add(Convolution2D(128,5,5,activation = "relu"))
+#model.add(MaxPooling2D())
+model.add(Convolution2D(24, 5, 5, border_mode="same", subsample=(2,2), activation="relu"))
+model.add(SpatialDropout2D(0.2))
+model.add(Convolution2D(36, 5, 5, border_mode="same", subsample=(2,2), activation="relu"))
+model.add(SpatialDropout2D(0.2))
+model.add(Convolution2D(48, 5, 5, border_mode="valid", subsample=(2,2), activation="relu"))
+model.add(SpatialDropout2D(0.2))
+model.add(Convolution2D(64, 3, 3, border_mode="valid", activation="relu"))
+model.add(SpatialDropout2D(0.2))
+model.add(Convolution2D(64, 3, 3, border_mode="valid", activation="relu"))
+model.add(SpatialDropout2D(0.2))
 
-model.add(Dropout(0.5))
+
 model.add(Flatten())
 model.add(Activation('relu'))
 
@@ -110,15 +120,18 @@ model.add(Activation('relu'))
 
 model.add(Dense(50))
 model.add(Activation('relu'))
+model.add(Dropout(0.5))
 
 model.add(Dense(1))
+#adam = Adam(lr=0.0001)
+adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.01)
 
 model.compile(loss='mse', optimizer='adam',metrics=['accuracy'])
 model.summary()
 #model.fit(myTrain,validation_split =0.2, shuffle=True, nb_epoch=3)
 #model.fit(X_train, Y_train, nb_epoch=3,verbose=1, validation_data=(X_valid, Y_valid))
 model.fit_generator(train_generator, samples_per_epoch= len(train_samples), validation_data=validation_generator,
-           nb_val_samples=len(validation_samples), nb_epoch=15)
+           nb_val_samples=len(validation_samples), nb_epoch=20)
 
 model.save("model.h5")
 print("Saved model to disk")
