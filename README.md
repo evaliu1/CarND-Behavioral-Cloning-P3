@@ -77,15 +77,14 @@ Here is an example image of center lane driving:
 ![alt text](https://github.com/evaliu1/CarND-Behavioral-Cloning-P3/blob/master/Img/center_2016_12_01_13_30_48_287.jpg)
 
 
-After the collection process, I had 30485 number of data points. I then preprocessed this data using pre-defined generator function.
-
-I finally randomly shuffled the data set and put 1605 data into a validation set.
+After the collection process, I had 30485 number of data points. I then preprocessed this data using pre-defined generator function. I finally randomly shuffled the data set and put 1605 data into a validation set.
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. I used 20 epoch to train the data. And I got the training loss for 0.0457.
 
-I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used an adam optimizer and set the learning rate as 0.01.
 
 Then I simulated my model and recorded the driving video.
 
+![video demo](https://github.com/evaliu1/CarND-Behavioral-Cloning-P3/blob/master/run1.mp4)
 
 
