@@ -85,6 +85,5 @@ I used an adam optimizer and set the learning rate as 0.01.
 
 Then I simulated my model and recorded the driving video.
 
-[![video demo](https://github.com/evaliu1/CarND-Behavioral-Cloning-P3/blob/master/Img/center_2016_12_01_13_30_48_287.jpg)](https://github.com/evaliu1/CarND-Behavioral-Cloning-P3/blob/master/run1.mp4)
 
 
